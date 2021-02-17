@@ -1,10 +1,11 @@
-FROM alpine
+FROM alpine:3.11.7
 MAINTAINER David Personette <dperson@gmail.com>
 
 # Install samba
 RUN apk --no-cache --no-progress upgrade && \
-    apk --no-cache --no-progress add bash samba shadow tini tzdata && \
-    addgroup -S smb && \
+	apk --no-cache --no-progress add bash 'samba<4.12' shadow tini tzdata
+
+RUN addgroup -S smb && \
     adduser -S -D -H -h /tmp -s /sbin/nologin -G smb -g 'Samba User' smbuser &&\
     file="/etc/samba/smb.conf" && \
     sed -i 's|^;* *\(log file = \).*|   \1/dev/stdout|' $file && \
