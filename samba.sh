@@ -137,6 +137,9 @@ share() { local share="$1" path="$2" browsable="${3:-yes}" ro="${4:-yes}" \
         echo "   write list = $(tr ',' ' ' <<< $writelist)" >>$file
     [[ ${comment:-""} && ! ${comment:-""} =~ none ]] &&
         echo "   comment = $(tr ',' ' ' <<< $comment)" >>$file
+    first=($(echo $users | tr ',' ' '))
+    [[ ${users:-""} && ! ${users:-""} == all ]] &&
+        echo "   force user = $first" >>$file
     echo "" >>$file
     [[ -d $path ]] || mkdir -p $path
 }
