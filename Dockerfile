@@ -1,12 +1,12 @@
 FROM alpine:edge
-MAINTAINER David Personette <dperson@gmail.com>
+MAINTAINER Daniele De Francesco <github@qq7te.com>
 
 # Install samba
 RUN apk --no-cache --no-progress upgrade && \
 	apk --no-cache --no-progress add bash 'samba>=4.13.3' shadow tini tzdata
 
-RUN addgroup -S smb && \
-    adduser -S -D -H -h /tmp -s /sbin/nologin -G smb -g 'Samba User' smbuser &&\
+RUN \
+    addgroup --gid 2000 casa && \
     file="/etc/samba/smb.conf" && \
     sed -i 's|^;* *\(log file = \).*|   \1/dev/stdout|' $file && \
     sed -i 's|^;* *\(load printers = \).*|   \1no|' $file && \
@@ -20,12 +20,12 @@ RUN addgroup -S smb && \
     echo '   pam password change = yes' >>$file && \
     echo '   map to guest = bad user' >>$file && \
     echo '   usershare allow guests = yes' >>$file && \
-    echo '   create mask = 0664' >>$file && \
-    echo '   force create mode = 0664' >>$file && \
+    echo '   create mask = 0640' >>$file && \
+    echo '   force create mode = 0640' >>$file && \
     echo '   directory mask = 0775' >>$file && \
     echo '   force directory mode = 0775' >>$file && \
-    echo '   force user = smbuser' >>$file && \
-    echo '   force group = smb' >>$file && \
+    echo '   force user = daniele' >>$file && \
+    echo '   force group = casa' >>$file && \
     echo '   follow symlinks = yes' >>$file && \
     echo '   load printers = no' >>$file && \
     echo '   printing = bsd' >>$file && \

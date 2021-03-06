@@ -1,27 +1,82 @@
-version: '3.4'
+version: '3.9'
 
 services:
+  # avahi:
+  #   image: stanback/alpine-avahi
+  #   network_mode: "host"
+  #   restart: always
+  #   volumes:
+  #     - ./services:/etc/avahi/services
+    
   samba:
-    image: dperson/samba
+    image: daniele/samba:4.13.3_3
     environment:
       TZ: 'EST5EDT'
     networks:
       - default
     ports:
-      - "137:137/udp"
-      - "138:138/udp"
       - "139:139/tcp"
       - "445:445/tcp"
-    read_only: true
     tmpfs:
       - /tmp
     restart: unless-stopped
     stdin_open: true
     tty: true
     volumes:
-      - /mnt:/mnt:z
-      - /mnt2:/mnt2:z
-    command: '-s "Mount;/mnt" -s "Bobs Volume;/mnt2;yes;no;no;bob" -u "bob;bobspasswd" -p'
+      - music:/music
+      - movies:/movies
+      - pictures:/pictures
+      - daniele:/daniele
+      - radhika:/radhika
+      - arya:/arya
+      - rishi:/rishi
+    command: >
+      -u "daniele;badpass;;casa"
+      -u "radhika;badpass;;casa" 
+      -u "arya;badpass;;casa" 
+      -u "rishi;badpass;;casa" 
+      -s "radhika;/radhika;yes;no;no;radhika,daniele"  
+      -s "daniele;/daniele;yes;no;no;daniele"
+      -s "arya;/arya;yes;no;no;arya,radhika,daniele"  
+      -s "rishi;/rishi;yes;no;no;rishi,radhika,daniele"
+      -s "music;/music;yes;yes;yes;daniele,radhika,arya,rishi;;daniele"
+      -s "movies;/movies;yes;yes;yes;daniele,radhika,arya,rishi;;daniele"
+      -s "pictures;/pictures;yes;yes;no;daniele,radhika,arya,rishi;;daniele"
+      -p
+      -S
+        
+       
 
 networks:
   default:
+
+volumes:
+  music:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/music_store
+  movies:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/videos
+  pictures:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/pictures
+  daniele:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/documents/daniele
+  radhika:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/documents/rdutt
+  arya:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/documents/arya
+  rishi:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/documents/rishi
+    
