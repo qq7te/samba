@@ -9,7 +9,7 @@ services:
   #     - ./services:/etc/avahi/services
     
   samba:
-    image: daniele/samba:4.13.3_3
+    image: daniele/samba:4.13.3_4
     environment:
       TZ: 'EST5EDT'
     networks:
@@ -23,6 +23,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
+      - configs:/configs
       - music:/music
       - movies:/movies
       - pictures:/pictures
@@ -31,10 +32,7 @@ services:
       - arya:/arya
       - rishi:/rishi
     command: >
-      -u "daniele;badpass;;casa"
-      -u "radhika;badpass;;casa" 
-      -u "arya;badpass;;casa" 
-      -u "rishi;badpass;;casa" 
+      -i "/configs/users.smbpasswd"
       -s "radhika;/radhika;yes;no;no;radhika,daniele"  
       -s "daniele;/daniele;yes;no;no;daniele"
       -s "arya;/arya;yes;no;no;arya,radhika,daniele"  
@@ -51,6 +49,10 @@ networks:
   default:
 
 volumes:
+  configs:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /home/daniele/smbconfigs
   music:
     driver: local-persist
     driver_opts:

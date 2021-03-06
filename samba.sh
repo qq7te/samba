@@ -74,12 +74,11 @@ include() { local includefile="$1" file=/etc/samba/smb.conf
 # Arguments:
 #   file) file to import
 # Return: user(s) added to container
-import() { local file="$1" name id
-    while read name id; do
-        grep -q "^$name:" /etc/passwd || adduser -D -H -u "$id" "$name"
-    done < <(cut -d: -f1,2 $file | sed 's/:/ /')
-    pdbedit -i smbpasswd:$file
-}
+import() { local file="$1" name passwd id group gid
+	   while read name passwd id group gid ; do
+	       user $name $passwd $id $group $gid
+	   done < <(cut -d: -f1,2,3 $file | sed 's/:/ /g')
+	 }
 
 ### perms: fix ownership and permissions of share paths
 # Arguments:
