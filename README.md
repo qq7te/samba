@@ -37,8 +37,12 @@ OR set local storage:
                     required arg: "<parameter>" - IE: "log level = 2"
         -g "<parameter>" Provide global option for smb.conf
                     required arg: "<parameter>" - IE: "log level = 2"
-        -i "<path>" Import smbpassword
-                    required arg: "<path>" - full file path in container
+        -i "<path>" Import users and passwords
+                    required arg: "<path>" - full file path in container.
+                    File should contain one line per use in the same format
+                    as the -s option for this command.
+                    Since the file is not part of the docker image, it is advisable
+                    to mount it when the container is started
         -n          Start the 'nmbd' daemon to advertise the shares
         -p          Set ownership and permissions on the shares
         -r          Disable recycle bin for shares
