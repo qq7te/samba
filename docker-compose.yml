@@ -1,13 +1,6 @@
 version: '3.9'
 
 services:
-  # avahi:
-  #   image: stanback/alpine-avahi
-  #   network_mode: "host"
-  #   restart: always
-  #   volumes:
-  #     - ./services:/etc/avahi/services
-    
   samba:
     image: daniele/samba:4.13.3_4
     environment:
@@ -43,6 +36,12 @@ services:
       -p
       -S
         
+  avahi:
+    image: stanback/alpine-avahi
+    network_mode: "host"
+    restart: always
+    volumes:
+      - /home/daniele/projects/samba/services:/etc/avahi/services
        
 
 networks:
