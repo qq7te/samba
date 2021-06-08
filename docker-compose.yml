@@ -41,7 +41,7 @@ services:
     network_mode: "host"
     restart: always
     volumes:
-      - /home/daniele/projects/samba/services:/etc/avahi/services
+      - ${PWD}/services:/etc/avahi/services
        
 
 networks:
@@ -55,11 +55,11 @@ volumes:
   music:
     driver: local-persist
     driver_opts:
-      mountpoint: /vastocean/music_store
+      mountpoint: /vastocean/music
   movies:
     driver: local-persist
     driver_opts:
-      mountpoint: /vastocean/videos
+      mountpoint: /vastocean/movies
   pictures:
     driver: local-persist
     driver_opts:
