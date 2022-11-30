@@ -2,7 +2,8 @@ version: '3.9'
 
 services:
   samba:
-    image: daniele/samba:4.13.3_4
+    build: .
+    image: daniele/samba_ng
     environment:
       TZ: 'EST5EDT'
     networks:

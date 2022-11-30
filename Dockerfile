@@ -3,7 +3,7 @@ MAINTAINER Daniele De Francesco <github@qq7te.com>
 
 # Install samba
 RUN apk --no-cache --no-progress upgrade && \
-	apk --no-cache --no-progress add bash 'samba>=4.13.3' shadow tini tzdata
+	apk --no-cache --no-progress add bash 'samba>=4.16.7' shadow tini tzdata
 
 RUN \
     addgroup --gid 2000 casa && \
