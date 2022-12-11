@@ -23,6 +23,7 @@ services:
       - pictures:/pictures
       - books:/books
       - homevideos:/homevideos
+      - software:/software
       - daniele:/daniele
       - radhika:/radhika
       - arya:/arya
@@ -38,6 +39,7 @@ services:
       -s "pictures;/pictures;yes;yes;no;daniele,radhika,arya,rishi;;daniele"
       -s "books;/books;yes;yes;yes;daniele,radhika,arya,rishi;;daniele"
       -s "homevideos;/homevideos;yes;yes;no;daniele,radhika,arya,rishi;;daniele"
+      -s "software;/software;yes;yes;no;daniele;;daniele"
       -S
         
   avahi:
@@ -76,6 +78,10 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /vastocean/pictures
+  software:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /vastocean/software
   daniele:
     driver: local-persist
     driver_opts:
